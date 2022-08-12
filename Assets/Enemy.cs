@@ -168,6 +168,11 @@ public class Enemy : MonoBehaviour
             transform.localScale = new Vector3(1f, 1f, 1f);
         }
 
+        if (map.WorldToCell(player.transform.position) == map.WorldToCell(transform.position))
+        {
+            LoadManager.LoadFightScene();
+        }
+
         transform.position = new Vector3(transform.position.x, transform.position.y, 0);
     }
 }
