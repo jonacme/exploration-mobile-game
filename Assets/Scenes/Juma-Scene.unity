@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 380925817}
   - component: {fileID: 380925819}
   - component: {fileID: 380925818}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Tilemap-Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4021,7 +4021,7 @@ GameObject:
   m_Component:
   - component: {fileID: 410350693}
   - component: {fileID: 410350694}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: parchmentBasic (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4105,7 +4105,7 @@ GameObject:
   m_Component:
   - component: {fileID: 436106227}
   - component: {fileID: 436106228}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: parchmentBasic (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4189,7 +4189,7 @@ GameObject:
   m_Component:
   - component: {fileID: 647495292}
   - component: {fileID: 647495293}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: parchmentBasic (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4273,7 +4273,7 @@ GameObject:
   m_Component:
   - component: {fileID: 706474750}
   - component: {fileID: 706474751}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: parchmentBasic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4358,7 +4358,7 @@ GameObject:
   - component: {fileID: 825846572}
   - component: {fileID: 825846571}
   - component: {fileID: 825846570}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4377,6 +4377,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e4d669f9521ae94fb0f35e5dbaa8af2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  input: {x: 0, y: 0}
+  moveSpeed: 8
+  isMoving: 0
 --- !u!212 &825846571
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4454,7 +4457,7 @@ GameObject:
   m_Component:
   - component: {fileID: 862369253}
   - component: {fileID: 862369252}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4498,7 +4501,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1292944546}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4620,7 +4623,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1835602885}
   - component: {fileID: 1835602886}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: parchmentBasic (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4704,7 +4707,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1842554390}
   - component: {fileID: 1842554391}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: parchmentBasic (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

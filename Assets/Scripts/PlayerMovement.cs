@@ -15,6 +15,9 @@ public class PlayerMovement : MonoBehaviour
             input.x = Input.GetAxisRaw("Horizontal");
             input.y = Input.GetAxisRaw("Vertical");
 
+            //removediagnoal Movement
+            if (input.x != 0) input.y = 0;
+
 
             if (input != Vector2.zero)
             {
