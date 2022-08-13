@@ -1,12 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Movement Settings")]
     public Vector2 input;
     public float moveSpeed;
     public bool isMoving;
+
+    [Header("Layer Settings")]
+    public LayerMask solidObjectsLayer;
+    public LayerMask groundWorldLayer;
 
     void Update()
     {
@@ -25,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
                 targetPos.x += input.x;
                 targetPos.y += input.y;
 
+                if(IsWalkable(targetPos))
                 StartCoroutine(Move(targetPos));  
             }            
         }
@@ -42,5 +49,27 @@ public class PlayerMovement : MonoBehaviour
         transform.position = targetPos;
 
         isMoving = false;
+
+        RandomEncounter();
+    }
+
+    private bool IsWalkable(Vector3 targetPos)
+    {
+        if(Physics2D.OverlapCircle(targetPos, 0.2f, solidObjectsLayer) != null)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    private void RandomEncounter()
+    {
+        if(Physics2D.OverlapCircle(transform.position, 0.2f, groundWorldLayer) != null)
+        {
+            //if(Random.Range(1,101 <= 10))
+            //{
+                
+            //}
+        }
     }
 }

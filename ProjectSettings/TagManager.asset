@@ -41,3 +41,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: BackGround
+    uniqueID: 3971513645
+    locked: 0
+  - name: TileMap - Ground
+    uniqueID: 2085822883
+    locked: 0
+  - name: TileMap - AboveGround
+    uniqueID: 2221541867
+    locked: 0
+  - name: Player
+    uniqueID: 3348007349
+    locked: 0
