@@ -4,36 +4,40 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-
-    Rigidbody2D rb2D;
-
-    public float horizontal;
-    public float vertical;
-    public float moveLimiter = 0.7f;
-
-    public float runSpeed = 20.0f;
-
-    void Start()
-    {
-        rb2D = GetComponent<Rigidbody2D>();
-    }
+    public Vector2 input;
+    public float moveSpeed;
+    public bool isMoving;
 
     void Update()
     {
-        // Gives a value between -1 and 1
-        horizontal = Input.GetAxisRaw("Horizontal"); // -1 is left
-        vertical = Input.GetAxisRaw("Vertical"); // -1 is down
+        if (!isMoving)
+        {
+            input.x = Input.GetAxisRaw("Horizontal");
+            input.y = Input.GetAxisRaw("Vertical");
+
+
+            if (input != Vector2.zero)
+            {
+                var targetPos = transform.position;
+                targetPos.x += input.x;
+                targetPos.y += input.y;
+
+                StartCoroutine(Move(targetPos));  
+            }            
+        }
     }
 
-    void FixedUpdate()
+    IEnumerator Move(Vector3 targetPos)
     {
-        if (horizontal != 0 && vertical != 0) // Check for diagonal movement
-        {
-            // limit movement speed diagonally, so you move at 70% speed
-            horizontal *= moveLimiter;
-            vertical *= moveLimiter;
-        }
+        isMoving = true;
 
-        rb2D.velocity = new Vector2(horizontal * runSpeed, vertical * runSpeed);
+        while((targetPos - transform.position).sqrMagnitude > Mathf.Epsilon)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
+            yield return null;
+        }
+        transform.position = targetPos;
+
+        isMoving = false;
     }
 }
