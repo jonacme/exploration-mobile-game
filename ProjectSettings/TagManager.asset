@@ -12,9 +12,9 @@ TagManager:
   - Water
   - UI
   - BackGround
-  - TileMap
+  - MoutainsAndSea
   - Player
-  - 
+  - ForeGround
   - 
   - 
   - 
@@ -47,9 +47,15 @@ TagManager:
   - name: TileMap - Ground
     uniqueID: 2085822883
     locked: 0
-  - name: TileMap - AboveGround
+  - name: TileMap - ForeGround
     uniqueID: 2221541867
+    locked: 0
+  - name: ' Mountains && Sea'
+    uniqueID: 3312378119
     locked: 0
   - name: Player
     uniqueID: 3348007349
+    locked: 0
+  - name: Tree && Bushes
+    uniqueID: 3764999039
     locked: 0

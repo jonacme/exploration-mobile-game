@@ -11,7 +11,8 @@ public class PlayerMovement : MonoBehaviour
     public bool isMoving;
 
     [Header("Layer Settings")]
-    public LayerMask solidObjectsLayer;
+    public LayerMask ForeGround;    // my layer Called ForeGround & MoutainsAndTree
+    public LayerMask MoutainsAndSea;    // was Called SolidObjects
     public LayerMask groundWorldLayer;
 
     void Update()
@@ -55,7 +56,11 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsWalkable(Vector3 targetPos)
     {
-        if(Physics2D.OverlapCircle(targetPos, 0.2f, solidObjectsLayer) != null)
+        if(Physics2D.OverlapCircle(targetPos, 0.2f, ForeGround) != null)
+        {
+            return false;
+        }
+        else if(Physics2D.OverlapCircle(targetPos, 0.2f, MoutainsAndSea) != null)
         {
             return false;
         }
