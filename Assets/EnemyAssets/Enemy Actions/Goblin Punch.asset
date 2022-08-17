@@ -16,5 +16,5 @@ MonoBehaviour:
   description: Goblin Punch is Goblin's attack when summoned. It deals weak non-elemental
     damage to one enemy.
   enemyType: 1
-  power: 8
-  accuracy: 8
+  power: 6
+  accuracy: 6
