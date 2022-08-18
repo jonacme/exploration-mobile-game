@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 
     [Header("UI LoadScrene")]
     public GameObject loadingScrene;
+    public bool sceneLoading;
     
 
     
@@ -32,31 +33,17 @@ public class GameManager : MonoBehaviour
     }
 
     IEnumerator LoadBattleScene()
-    {    
-        float loadingTime = 3f;
-        yield return new WaitForSeconds(loadingTime);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);        
-        Debug.Log("Encountered random enemy");
+    {
+        sceneLoading = false;
+        float loadingTime = 1.5f;
+        while (true)
+        {
+            loadingScrene.SetActive(true);
+            yield return new WaitForSeconds(loadingTime);
+            loadingScrene.SetActive(false);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            Debug.Log("Encountered random enemy");
 
+        }   
     }
-
-    //void LoadScrene(bool loading)
-    //{
-    //    float waitTime = 3f;
-
-    //    Debug.Log("Loading" + loading);     // need to make game manager for loading and not destorying the gameObject.
-    //    switch (loading)
-    //    {
-    //        case true:
-    //            Time.timeScale = 0f;
-    //            loadingScrene.SetActive(true);
-    //            yield return new WaitForSeconds(waitTime);
-    //            break;
-    //        case false:
-    //            Time.timeScale = 1f;
-    //            loadingScrene.SetActive(false);
-    //            break;
-    //    }
-    //}
-
 }
