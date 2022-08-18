@@ -3,9 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+public enum EnemyType
+{
+    Cyclops,
+    Cactus
+}
+
 public class Enemy : MonoBehaviour
 {
     public Tilemap map;
+
+    public EnemyType type;
+
+    private State state;
 
     public GameObject player;
 
@@ -25,12 +35,21 @@ public class Enemy : MonoBehaviour
 
     public SpriteRenderer spriteRenderer;
 
+    public float Distance(GameObject pos1, GameObject pos2)
+    {
+        var curCell = map.WorldToCell(pos1.transform.position);
+        var playerCell = map.WorldToCell(pos2.transform.position);
+        return Vector3Int.Distance(playerCell, curCell);
+    }
+
     void Init()
     {
         isTicking = false;
         reactToPlayerWithinRange = false;
         reactionTime = 2;
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+
+        state = new GoToRandomPos();
     }
 
     // Start is called before the first frame update
@@ -52,7 +71,7 @@ public class Enemy : MonoBehaviour
         return map.WorldToCell(transform.position + (Vector3)direction);
     }
 
-    void Move()
+    public void Move()
     {
         if (map.WorldToCell(transform.position) != targetCell)
         {
@@ -72,15 +91,15 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    bool InsideBounds(Vector3Int cell, int minX, int maxX, int minY, int maxY)
+    void TickClass()
     {
-        return cell.x <= maxX
-            && cell.x >= minX
-            && cell.y <= maxY
-            && cell.y >= minY;
+        state.Tick(this);
+
+        State newState = state.Transition(this);
+        if (newState != null) { state = newState; }
     }
 
-    void Tick()
+    void TickIfStatements()
     {
         var curCell = map.WorldToCell(transform.position);
         var playerCell = map.WorldToCell(player.transform.position);
@@ -97,14 +116,13 @@ public class Enemy : MonoBehaviour
                 // "jump"
             } else
             {
-
                 reactToPlayerWithinRange = false;
                 targetCell = playerCell;
 
                 Move();
             }
         }
-        else if (!InsideBounds(curCell, minX, maxX, minY, maxY))
+        else if (!TileUtil.InsideBounds(curCell, minX, maxX, minY, maxY))
         {
             targetCell = new Vector3Int(minX, minY);
 
@@ -123,7 +141,7 @@ public class Enemy : MonoBehaviour
                                           0);
 
                 targetCell = map.WorldToCell(transform.position) + diff;
-            } while (!InsideBounds(targetCell, minX, maxX, minY, maxY));
+            } while (!TileUtil.InsideBounds(targetCell, minX, maxX, minY, maxY));
 
             reactionTime = maxReactionTime;
             spriteRenderer.color = new Color(1f, 1f, 1f);
@@ -133,13 +151,33 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    // state: go to random position
+    //        set random target within bounds, move there
+    //        on start: reactionTime = maxReactionTime
+    // state: go back to bounds
+    //        set target to beginning of bounds, move there
+    //        on start: reactionTime = maxReactionTime
+    // state: reacting to player
+    //        wait
+    //        all transitions: reactToPlayerWithingRange = false
+    // state: chase player
+    //        move toward player
+
+
     IEnumerator TickLoop()
     {
         isTicking = true;
 
         while (true)
         {
-            Tick();
+            if (LoadManager.instance.useClassesInsteadOfIf)
+            {
+                TickClass();
+            }
+            else
+            {
+                TickIfStatements();
+            }
 
             yield return new WaitForSeconds(1f);
         }
@@ -170,7 +208,7 @@ public class Enemy : MonoBehaviour
 
         if (map.WorldToCell(player.transform.position) == map.WorldToCell(transform.position))
         {
-            LoadManager.LoadFightScene();
+            LoadManager.LoadFightScene(this);
         }
 
         transform.position = new Vector3(transform.position.x, transform.position.y, 0);

@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 public class LoadManager : MonoBehaviour
 {
     public string lastScene;
+    public bool useClassesInsteadOfIf;
+
     private static LoadManager _instance;
     public static LoadManager instance
     {
@@ -30,11 +32,11 @@ public class LoadManager : MonoBehaviour
         }
     }
 
-    IEnumerator LoadFightSceneRoutine()
+    IEnumerator LoadFightSceneRoutine(Enemy enemy)
     {
         lastScene = SceneManager.GetActiveScene().name;
-        yield return SceneManager.LoadSceneAsync("FightScene");
-        yield return SceneManager.SetActiveScene(SceneManager.GetSceneByName("FightScene"));
+        DB.InitFightScene(enemy);
+        SceneManager.LoadScene("FightScene");
         yield break;
     }
 
@@ -45,9 +47,9 @@ public class LoadManager : MonoBehaviour
         yield break;
     }
 
-    public static void LoadFightScene()
+    public static void LoadFightScene(Enemy enemy)
     {
-        instance.StartCoroutine(instance.LoadFightSceneRoutine());
+        instance.StartCoroutine(instance.LoadFightSceneRoutine(enemy));
     }
 
     public static void ExitFightScene()
