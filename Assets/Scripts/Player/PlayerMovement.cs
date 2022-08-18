@@ -1,7 +1,8 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 public class PlayerMovement : MonoBehaviour
@@ -14,7 +15,9 @@ public class PlayerMovement : MonoBehaviour
     [Header("Layer Settings")]
     public LayerMask ForeGround;        // layer Called ForeGround & MoutainsAndTree
     public LayerMask MoutainsAndSea;    
-    public LayerMask groundWorldLayer;  // random encounter layer in world map.
+    public LayerMask TreeAndBushes;  // random encounter layer in world map.
+
+    
 
     void Update()
     {
@@ -70,12 +73,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void RandomEncounter()
     {
-        if(Physics2D.OverlapCircle(transform.position, 0.2f, groundWorldLayer) != null)
+        if(Physics2D.OverlapCircle(transform.position, 0.2f, TreeAndBushes) != null)
         {
-            if (Random.Range(1, 101 <= 10))     // not sure why it isnt working
+            if (Random.Range(1, 101) <= 10)    
             {
-                Debug.Log("Encountered random enemy");
+                GameManager.Instance.battleScene();
             }
         }
-    }    
+    }  
+    
 }
