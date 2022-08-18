@@ -72,10 +72,10 @@ public class PlayerMovement : MonoBehaviour
     {
         if(Physics2D.OverlapCircle(transform.position, 0.2f, groundWorldLayer) != null)
         {
-            //if (Random.Range(1, 101 <= 10))   
-            //{
-            //    Debug.Log("Encountered random enemy");
-            //}            
+            if (Random.Range(1, 101 <= 10))     // not sure why it isnt working
+            {
+                Debug.Log("Encountered random enemy");
+            }
         }
     }    
 }
