@@ -56,7 +56,7 @@ public class PlayerStats : MonoBehaviour
         healthBar.value = currentHealth;
 
         mpBar.value = maxMP;
-        mpBar.value = currentMP;
+        mpBar.value = currentMP;  
 
         xpBar.value = maxEXP;
         xpBar.value = currentEXP;

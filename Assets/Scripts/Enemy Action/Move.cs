@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Move 
 {
-    public ActionNSpells actionNSpells { get; set; }     // this is for the player
+    public ActionNSpells ActionNSpells { get; set; }     // this is for the player
 
     public int Haste { get; set; }
 
     public Move(ActionNSpells pActionNSpells)
     {
-        actionNSpells = pActionNSpells;
+        ActionNSpells = pActionNSpells;
         Haste = pActionNSpells.Haste;
     }
 
