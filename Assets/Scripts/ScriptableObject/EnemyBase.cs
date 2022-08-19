@@ -18,15 +18,78 @@ public class EnemyBase : ScriptableObject
     [Header("Enemy Stats")]
     [SerializeField] int level;
     [SerializeField] int maxHp;
-    [SerializeField] int physicalAttack;
-    [SerializeField] int magicalAttack;
-    [SerializeField] int physicalDefense;
-    [SerializeField] int magicalDefense;
+    [SerializeField] int specialAttack;
+    [SerializeField] int attack;
+    [SerializeField] int magicAttack;
+    [SerializeField] int defense;
+    [SerializeField] int magicDefense;
 
-    public string GetName()
+    [SerializeField] List<learnableMove> learnableMoves;
+    
+
+    public string Name
     {
-        return enemyName;
+        get{ return enemyName; }
+    }                       // properties and not Methods
+
+    public string Description
+    {
+        get { return description; }
+    }
+
+    public int Level
+    {
+        get { return level; }
+    }
+
+    public int MaxHP
+    {
+        get { return maxHp; }
+    }
+
+    public int SpecialAttack
+    {
+        get { return specialAttack; }
+    }
+
+    public int Attack
+    {
+        get { return attack; }
+    }
+
+    public int MagicAttack
+    {
+        get { return magicAttack; }
+    }
+
+    public int Defense
+    {
+        get { return defense; }
+    }
+    public int MagicDefense
+    {
+        get { return magicDefense; }
     }    
+
+    public List<learnableMove> LearnableMoves 
+    {
+        get { return learnableMoves; }
+    }
+}
+[System.Serializable]
+public class learnableMove
+{
+    [SerializeField] ActionNSpells actionNSpells;
+    [SerializeField] int level;
+
+    public ActionNSpells ActionNSpells
+    {
+        get { return actionNSpells; }
+    }
+    public int Level
+    {
+        get { return level; }
+    }
 }
 
 public enum EnemyType
