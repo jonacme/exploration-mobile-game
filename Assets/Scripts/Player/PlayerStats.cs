@@ -40,7 +40,8 @@ public class PlayerStats : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        healthSliderDisplay.text = currentHealth + " / " + maxHealth;
+        mpSliderDisplay.text = currentMP + " / " + maxMP;
     }
 
     // Update is called once per frame
@@ -60,7 +61,7 @@ public class PlayerStats : MonoBehaviour
         xpBar.value = maxEXP;
         xpBar.value = currentEXP;
 
-        healthSliderDisplay.text = currentHealth + " / " + maxHealth;
-        mpSliderDisplay.text = currentMP + " / " + maxMP;
+        //healthSliderDisplay.text = currentHealth + " / " + maxHealth;
+        //mpSliderDisplay.text = currentMP + " / " + maxMP;
     }
 }
