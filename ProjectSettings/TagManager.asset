@@ -47,3 +47,18 @@ TagManager:
   - name: UI
     uniqueID: 674194407
     locked: 0
+  - name: Ground
+    uniqueID: 3288445707
+    locked: 0
+  - name: Obstacles
+    uniqueID: 2566591063
+    locked: 0
+  - name: Enemy
+    uniqueID: 1119075853
+    locked: 0
+  - name: Player
+    uniqueID: 4003079633
+    locked: 0
+  - name: Items
+    uniqueID: 3408636813
+    locked: 0
