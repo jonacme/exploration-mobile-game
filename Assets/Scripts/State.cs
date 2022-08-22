@@ -1,9 +1,9 @@
 public interface State {
-    void Start() { }
+    void Start(Enemy e) { }
 
     void Tick(Enemy e);
 
     State Transition(Enemy e) { return null; }
 
-    void Exit() { }
+    void Exit(Enemy e) { }
 }

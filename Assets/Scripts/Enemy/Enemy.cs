@@ -28,6 +28,8 @@ public class Enemy : MonoBehaviour
     public float maxReactionTime = 2f;
     public int aquisitionRange = 3;
 
+    public float tickTimeInSec = 1f;
+
     public int minX = -2;
     public int maxX = 1;
     public int minY = -2;
@@ -96,7 +98,15 @@ public class Enemy : MonoBehaviour
         state.Tick(this);
 
         State newState = state.Transition(this);
-        if (newState != null) { state = newState; }
+        if (newState != null) { 
+            state = newState;
+
+            try
+            {
+                state.Start(this);
+            }
+            catch { }
+        }
     }
 
     void TickIfStatements()
@@ -179,7 +189,10 @@ public class Enemy : MonoBehaviour
                 TickIfStatements();
             }
 
-            yield return new WaitForSeconds(1f);
+            //remove when state testing is done
+            //Debug.Log(state);
+
+            yield return new WaitForSeconds(tickTimeInSec);
         }
     }
 

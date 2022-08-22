@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class GoToRandomPos : State
 {
+    public void Start(Enemy e)
+    {
+        e.reactionTime = e.maxReactionTime;
+        e.spriteRenderer.color = new Color(1f, 1f, 1f);
+        e.reactToPlayerWithinRange = false;
+    }
+
     public void Tick(Enemy e)
     {
         do
