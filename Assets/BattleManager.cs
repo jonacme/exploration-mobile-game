@@ -8,7 +8,7 @@ public class BattleManager : MonoBehaviour
     public float turnTimer = 0;
     public float turnTime = 1f;
 
-    public List<GameObject> enemies;
+    public List<EnemyInBattle> enemies;
 
     public UIDocument ui;
     public ProgressBar progressBar;
@@ -18,10 +18,12 @@ public class BattleManager : MonoBehaviour
 
     public GameObject player;
 
-    public GameObject selectedEnemy;
+    public EnemyInBattle selectedEnemy;
     public GameObject selectionArrow;
 
-    IEnumerator AttackAnimation(GameObject attacker, GameObject defender)
+    public IDictionary<EnemyType, BattleData> datas = new Dictionary<EnemyType, BattleData>();
+
+    IEnumerator AttackAnimation(GameObject attacker, EnemyInBattle defender)
     {
         var startPos = attacker.transform.position;
         var endPos = defender.transform.position;
@@ -34,6 +36,8 @@ public class BattleManager : MonoBehaviour
             attacker.transform.position = Vector3.Lerp(startPos, endPos, t);
             yield return 0;
         }
+
+        defender.Damage(10, attacker);
 
         for (float time = 0f; time < totalTime; time += Time.deltaTime)
         {
@@ -85,6 +89,8 @@ public class BattleManager : MonoBehaviour
         // don't run in editor
         if (!Application.isPlaying) { return; }
 
+        datas.Add(EnemyType.Cyclops, Resources.Load<BattleData>("Enemy/Cyclops"));
+
         progressBar = ui.rootVisualElement.Q<ProgressBar>("TurnProgress");
         progressBar.lowValue = 0;
         progressBar.highValue = turnTime;
@@ -94,12 +100,13 @@ public class BattleManager : MonoBehaviour
 
         for (int i = 0; i < DB.instance.currentBattle.nofEnemies; i++)
         {
-            enemies[i].SetActive(true);
+            enemies[i].gameObject.SetActive(true);
+            enemies[i].GetComponent<EnemyInBattle>().data = Instantiate(datas[EnemyType.Cyclops]);
         }
 
         for (int i = DB.instance.currentBattle.nofEnemies; i < enemies.Count; i++)
         {
-            enemies[i].SetActive(false);
+            enemies[i].gameObject.SetActive(false);
         }
     }
 
@@ -134,7 +141,7 @@ public class BattleManager : MonoBehaviour
 
             if (hit)
             {
-                selectedEnemy = hit.collider.gameObject;
+                selectedEnemy = hit.collider.gameObject.GetComponent<EnemyInBattle>();
                 selectionArrow.transform.position = selectedEnemy.transform.position;
             }
         }
