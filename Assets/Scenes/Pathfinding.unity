@@ -416,7 +416,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 12
-      m_TileSpriteIndex: 12
+      m_TileSpriteIndex: 25
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -616,7 +616,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 9
-      m_TileSpriteIndex: 9
+      m_TileSpriteIndex: 24
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -1295,14 +1295,14 @@ Tilemap:
     m_Data: {fileID: 1113098519, guid: ff6d81d762bcae844a4ef9dec6df29b6, type: 3}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 1
-    m_Data: {fileID: 1345688976, guid: ff6d81d762bcae844a4ef9dec6df29b6, type: 3}
   - m_RefCount: 0
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 1
-    m_Data: {fileID: 1702401265, guid: ff6d81d762bcae844a4ef9dec6df29b6, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
   - m_RefCount: 0
@@ -1325,10 +1325,10 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 1345688976, guid: ff6d81d762bcae844a4ef9dec6df29b6, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: 1702401265, guid: ff6d81d762bcae844a4ef9dec6df29b6, type: 3}
   - m_RefCount: 12
     m_Data: {fileID: 266613014, guid: ff6d81d762bcae844a4ef9dec6df29b6, type: 3}
   - m_RefCount: 1
@@ -1667,7 +1667,7 @@ MonoBehaviour:
   toCheckTile: {fileID: 11400000, guid: 54e8894410a2d0e4d960ab6c1e45fe45, type: 2}
   neighbourTile: {fileID: 11400000, guid: a68df59444f0e2049a7ca99b8cd825ae, type: 2}
   emptyTile: {fileID: 11400000, guid: 5b5490d527672df43ae3bb0cfd4a3239, type: 2}
-  pathTile: {fileID: 0}
+  pathTile: {fileID: 11400000, guid: 87a638068af394b4db4ea7f8a123a0cd, type: 2}
   start: {x: 0, y: 0, z: 0}
   goal: {x: 0, y: 0, z: 0}
   allChecked: []
