@@ -327,14 +327,6 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4276563225544071604, guid: 60172f34412f18c4d9ba710f12a641ca, type: 3}
-      propertyPath: m_SortingLayer
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4276563225544071604, guid: 60172f34412f18c4d9ba710f12a641ca, type: 3}
-      propertyPath: m_SortingLayerID
-      value: 674194407
-      objectReference: {fileID: 0}
     - target: {fileID: 5032168151582188146, guid: 60172f34412f18c4d9ba710f12a641ca, type: 3}
       propertyPath: m_Name
       value: Enemy3

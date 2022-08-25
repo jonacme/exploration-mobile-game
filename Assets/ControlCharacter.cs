@@ -9,6 +9,7 @@ public class ControlCharacter : MonoBehaviour
 
     public bool isMoving;
     public Vector3Int targetCell;
+    public Vector3Int currentCell;
 
     // Start is called before the first frame update
     void Start()
@@ -48,6 +49,8 @@ public class ControlCharacter : MonoBehaviour
         }
 
         isMoving = false;
+
+        yield break;
     }
 
     // Update is called once per frame
