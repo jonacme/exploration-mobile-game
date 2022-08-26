@@ -44,11 +44,11 @@ TagManager:
   - name: Characters
     uniqueID: 3845876703
     locked: 0
-  - name: UI
-    uniqueID: 674194407
-    locked: 0
   - name: Ground
     uniqueID: 3288445707
+    locked: 0
+  - name: BackgroundDetails
+    uniqueID: 130181731
     locked: 0
   - name: Obstacles
     uniqueID: 2566591063
@@ -61,4 +61,7 @@ TagManager:
     locked: 0
   - name: Items
     uniqueID: 3408636813
+    locked: 0
+  - name: UI
+    uniqueID: 674194407
     locked: 0
