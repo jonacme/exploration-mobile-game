@@ -31,8 +31,10 @@ public class PlayerStats : MonoBehaviour
     public Slider mpBar;
     public Slider xpBar;
 
+    [Header("HP Color")]
     public Gradient gradient;
 
+    [Header("Text Display")]
     public TextMeshProUGUI healthSliderDisplay;
     public TextMeshProUGUI mpSliderDisplay;
 

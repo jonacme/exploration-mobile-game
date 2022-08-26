@@ -6,17 +6,17 @@ using UnityEngine;
 public class ActionNSpells : ScriptableObject
 {
     [Header("Enemy Names || Enemy Descriptions")]
-    [SerializeField] private string _name;
+    [SerializeField] private string _name;                         // adding name of the skill
     [TextArea]
-    [SerializeField] private string description;
+    [SerializeField] private string description;                   // adding description of the skill
 
     [Header("Enemy Types")]
-    [SerializeField] private EnemyType enemyType;
+    [SerializeField] private EnemyType enemyType;                  // the enemy type which can use this skill
 
-    [Header("Enemy Stats")]
-    [SerializeField] int power;
+    [Header("Enemy Stats")]                                        // might not need this since enemy stats exits in enemyBase scripts
+    [SerializeField] int power;                                    // and how much damage it should do to the player
     [SerializeField] int accuracy;
-    [SerializeField] int haste;                  // might change it
+    [SerializeField] int haste;                                    // might change it
 
     public string Name
     {

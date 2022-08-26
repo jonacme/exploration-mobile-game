@@ -19,7 +19,7 @@ public class Enemy
         HP = enemyBase.MaxHP;
 
         Moves = new List<Move>();                      // most like is for player
-        foreach ( var move in enemyBase.LearnableMoves)
+        foreach ( var move in enemyBase.SpecialEnemyMove)
         {
             if(move.Level <= level)
             {

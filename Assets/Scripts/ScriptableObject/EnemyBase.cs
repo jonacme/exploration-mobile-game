@@ -24,13 +24,14 @@ public class EnemyBase : ScriptableObject
     [SerializeField] int defense;
     [SerializeField] int magicDefense;
 
-    [SerializeField] List<learnableMove> learnableMoves;
-    
+    [SerializeField] List<specialEnemyMove> specialEnemyMove;
 
+
+    // properties and not Methods
     public string Name
     {
         get{ return enemyName; }
-    }                       // properties and not Methods
+    }                                             
 
     public string Description
     {
@@ -71,16 +72,16 @@ public class EnemyBase : ScriptableObject
         get { return magicDefense; }
     }    
 
-    public List<learnableMove> LearnableMoves 
+    public List<specialEnemyMove> SpecialEnemyMove 
     {
-        get { return learnableMoves; }
+        get { return specialEnemyMove; }
     }
 }
 [System.Serializable]
-public class learnableMove
+public class specialEnemyMove
 {
-    [SerializeField] ActionNSpells actionNSpells;
-    [SerializeField] int level;
+    [SerializeField] ActionNSpells actionNSpells;   
+    [SerializeField] int level;                           // use the move if low enough HP
 
     public ActionNSpells ActionNSpells
     {

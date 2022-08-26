@@ -35,13 +35,14 @@ public class GameManager : MonoBehaviour
     IEnumerator LoadBattleScene()
     {
         sceneLoading = false;
-        float loadingTime = 1.5f;
+        float loadingTime = 1.2f;
         while (true)
         {
             loadingScrene.SetActive(true);
             yield return new WaitForSeconds(loadingTime);
             loadingScrene.SetActive(false);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            // when secne loads the battlescene i want to start progress bar on will at 0 for player and it should fil up soon after
             Debug.Log("Encountered random enemy");
 
         }   
