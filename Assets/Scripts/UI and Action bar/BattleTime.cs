@@ -45,14 +45,42 @@ public class BattleTime : MonoBehaviour
         instance.fightButton.enabled = true;
         Debug.Log("FightButton Pressed");
 
-        instance.StartCoroutine(instance.AttackAnimation());
+        instance.StartCoroutine(instance.AttackAnimation(instance.player, instance.selectedEnemy));
 
     }
 
-    IEnumerator AttackAnimation()
+    IEnumerator AttackAnimation(GameObject attacker, GameObject defender)
     {
-        Debug.Log("Attack Button");
-        yield break;
+        var startPos = attacker.transform.position;
+        var endPos = defender.transform.position;
+        float totalTime = 0.5f;
+
+        for (float time = 0f; time < totalTime; time += Time.deltaTime)
+        {
+            var t = time / totalTime;
+            t = t * t * t;
+            attacker.transform.position = Vector3.Lerp(startPos, endPos, t);
+            yield return 0;
+        }
+
+        for (float time = 0f; time < totalTime; time += Time.deltaTime)
+        {
+            var t = time / totalTime;
+            t = (1 - t);
+            t = t * t * t;
+            t = (1 - t);
+
+            attacker.transform.position = Vector3.Lerp(endPos, startPos, t);
+            yield return 0;
+        }
+    }
+
+    private static void OnScriptsReloaded()
+    {
+        foreach (var bm in Object.FindObjectsOfType<BattleTime>())
+        {
+            bm.Init();
+        }
     }
 
     private static BattleTime _instance;
@@ -69,7 +97,7 @@ public class BattleTime : MonoBehaviour
     }
 
     void Start()
-    {   
+    {    
         Init();
     }
 
@@ -84,17 +112,48 @@ public class BattleTime : MonoBehaviour
             progressBar.value = turnTime;
             instance.fightButton.enabled = true;
         }
+
+        //...........................................................................................//
+
+        if (!selectedEnemy)
+        {
+            selectedEnemy = enemies[0];
+            selectionArrow.transform.position = selectedEnemy.transform.position;
+        }
+
+        turnTimer += Time.deltaTime;
+        progressBar.value = turnTimer;                
+
+        if (turnTimer >= turnTime)
+        {
+            instance.fightButton.enabled = true;
+        }
+
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            var mp = new Vector2(mousePos.x, mousePos.y);
+            var hit = Physics2D.Raycast(mp, Vector2.zero, enemyLayer);
+
+            if (hit)
+            {
+                selectedEnemy = hit.collider.gameObject;
+                selectionArrow.transform.position = selectedEnemy.transform.position;
+            }
+        }
     }
 
     public void Init()
     {
         if (!Application.isPlaying) { return; }
 
-        progressBar.value = 0;
+        progressBar.minValue = turnTimer;
+        progressBar.maxValue = turnTime;
 
         if (progressBar.minValue <= 0)
         {
-            progressBar.value = turnTimer;
+            progressBar.value = turnTimer;           
         }
 
         fightButton.enabled = false;

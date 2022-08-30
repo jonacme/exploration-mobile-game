@@ -17,6 +17,8 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask MoutainsAndSea;    
     public LayerMask TreeAndBushes;  // random encounter layer in world map.
 
+    private Enemies enemy;
+
     
 
     void Update()
@@ -77,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (Random.Range(1, 101) <= 10)    
             {
-                GameManager.Instance.battleScene();
+                GameManager.Instance.battleScene(enemy);
             }
         }
     }  

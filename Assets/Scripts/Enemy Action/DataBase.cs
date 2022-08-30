@@ -39,10 +39,10 @@ public class DataBase : MonoBehaviour
 
     public Battle currentBattle;
 
-    public static void InitFightScene(Enemy enemy)
+    public static void InitFightScene(Enemies enemy)
     {
         instance.currentBattle = new Battle();
         instance.currentBattle.nofEnemies = Random.Range(1, 3);
-        //instance.currentBattle.type = enemy.type;              // enemy.type isnt working;
+        instance.currentBattle.type = enemy.type;              // enemy.type isnt working;
     }
 }

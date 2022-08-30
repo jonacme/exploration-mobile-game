@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     [Header("UI LoadScrene")]
+    public string lastScene;
     public GameObject loadingScrene;
     public bool sceneLoading;
     
@@ -27,24 +28,39 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    public void battleScene()
+    public void battleScene(Enemies enemy)
     {
-        StartCoroutine(LoadBattleScene());
+        StartCoroutine(LoadBattleScene(enemy));
     }
 
-    IEnumerator LoadBattleScene()
+    IEnumerator LoadBattleScene(Enemies enemy)
     {
         sceneLoading = false;
         float loadingTime = 1.2f;
+        
         while (true)
         {
             loadingScrene.SetActive(true);
             yield return new WaitForSeconds(loadingTime);
             loadingScrene.SetActive(false);
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-            // when secne loads the battlescene i want to start progress bar on will at 0 for player and it should fil up soon after
-            Debug.Log("Encountered random enemy");
 
+            lastScene = SceneManager.GetActiveScene().name;
+            // need to load the enemy type method too
+            DataBase.InitFightScene(enemy);
+            SceneManager.LoadScene("Juma-BattleScene");
+            yield break;
         }   
+    }
+
+    IEnumerator ExitFightSceneRoutine()            // not yet complete
+    {
+        yield return SceneManager.LoadSceneAsync(lastScene);
+        yield return SceneManager.SetActiveScene(SceneManager.GetSceneByName(lastScene));
+        yield break;
+    }
+
+    public static void ExitFightScene()
+    {
+        //StartCoroutine(ExitFightScene());
     }
 }
