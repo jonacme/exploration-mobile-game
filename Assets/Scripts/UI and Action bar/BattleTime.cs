@@ -6,7 +6,9 @@ using UnityEngine.UI;
 public class BattleTime : MonoBehaviour
 {
     [Header("Player Turn")]
-    public float turnTimer = 0f;     // not progressed yet
+    [Range(0,1)]
+    public float progressTimer = 0f;     // not progressed yet
+    [Range(1, 0)]
     public float turnTime = 1f;
 
     [Header("Lists of Enemies")]
@@ -38,12 +40,12 @@ public class BattleTime : MonoBehaviour
     {
         //battle starts  turntimer should be 0 and it should progress
 
-        if (instance.turnTimer >= instance.turnTime)
+        if (instance.progressTimer >= instance.turnTime)
         {
             instance.turnTime = 0f;
         }
         instance.fightButton.enabled = true;
-        Debug.Log("FightButton Pressed");
+        Debug.Log("FightButton Pressed" + instance.fightButton);
 
         instance.StartCoroutine(instance.AttackAnimation(instance.player, instance.selectedEnemy));
 
@@ -103,15 +105,15 @@ public class BattleTime : MonoBehaviour
 
     void Update()
     {
-        turnTime += Time.deltaTime;
-        progressBar.value = turnTime;
+        //turnTime += Time.deltaTime;
+        //progressBar.value = turnTime;
 
 
-        if (turnTimer >= turnTime)
-        {
-            progressBar.value = turnTime;
-            instance.fightButton.enabled = true;
-        }
+        //if (turnTimer >= turnTime)
+        //{
+        //    progressBar.value = turnTime;
+        //    instance.fightButton.enabled = true;
+        //}
 
         //...........................................................................................//
 
@@ -121,10 +123,10 @@ public class BattleTime : MonoBehaviour
             selectionArrow.transform.position = selectedEnemy.transform.position;
         }
 
-        turnTimer += Time.deltaTime;
-        progressBar.value = turnTimer;                
+        progressTimer += Time.deltaTime;
+        progressBar.value = progressTimer;                
 
-        if (turnTimer >= turnTime)
+        if (progressTimer >= turnTime)
         {
             instance.fightButton.enabled = true;
         }
@@ -148,12 +150,12 @@ public class BattleTime : MonoBehaviour
     {
         if (!Application.isPlaying) { return; }
 
-        progressBar.minValue = turnTimer;
+        progressBar.minValue = progressTimer;
         progressBar.maxValue = turnTime;
 
         if (progressBar.minValue <= 0)
         {
-            progressBar.value = turnTimer;           
+            progressBar.value = progressTimer;           
         }
 
         fightButton.enabled = false;

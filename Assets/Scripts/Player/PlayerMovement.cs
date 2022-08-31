@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement Settings")]
     public Vector2 input;
-    public float moveSpeed;
+    public float moveSpeed;    
     public bool isMoving;
 
     [Header("Layer Settings")]
