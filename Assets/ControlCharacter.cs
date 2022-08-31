@@ -22,6 +22,11 @@ public class ControlCharacter : MonoBehaviour
         return map.WorldToCell(transform.position + (Vector3)direction);
     }
 
+    public void SetPos(Vector3 pos)
+    {
+        transform.position = map.WorldToCell(pos);
+    }
+
     IEnumerator WaitToMove()
     {
         var worldpos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -44,8 +49,6 @@ public class ControlCharacter : MonoBehaviour
             {
                 nextcell = RelativeCell((new Vector2(0, diff.y)).normalized);
             }
-
-            transform.position = map.CellToWorld(nextcell);
         }
 
         isMoving = false;
