@@ -25,6 +25,13 @@ namespace Kristofer.exploration
             return tileMap.WorldToCell(transform.position + (Vector3)direction);
         }
 
+        public void SetPos(Vector3 position)
+        {
+            transform.position = tileMap.WorldToCell(position);
+
+        }
+
+
         IEnumerator WaitToMove()
         {
             var worldpos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -49,7 +56,8 @@ namespace Kristofer.exploration
                     nextcell = RelativeCell((new Vector2(0, currentPosition.y)).normalized);
                 }
 
-                transform.position = tileMap.CellToWorld(nextcell);
+                //transform.position = tileMap.CellToWorld(nextcell);
+
             }
 
             isMoving = false;
