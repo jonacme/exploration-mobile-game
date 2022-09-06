@@ -8,7 +8,6 @@ namespace Kristofer.exploration
     {
         public string name;
 
-
     }
 
 }

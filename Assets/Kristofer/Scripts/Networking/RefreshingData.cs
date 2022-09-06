@@ -1,30 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 namespace Kristofer.exploration
 {
-
-    public class PlayerController : MonoBehaviour
+    public class RefreshingData : MonoBehaviour
     {
-        public Tilemap tileMap;
-        public KristoferFetch fetch;
+        [SerializeField] private bool isRefreshing = false;
+        public PlayerController player;
 
-        public bool isMoving;
-        [HideInInspector]
-        public Vector3Int targetCell;
-        
-        
         void Start()
         {
-           
+
             Init();
         }
 
         public void Init()
         {
-            isMoving = false;
+            isRefreshing = false;
 
         }
 
@@ -44,12 +37,12 @@ namespace Kristofer.exploration
 
         Vector3Int RelativeCell(Vector2 direction)
         {
-            return tileMap.WorldToCell(transform.position + (Vector3)direction);
+            return player.tileMap.WorldToCell(transform.position + (Vector3)direction);
         }
 
         public void SetPos(Vector3 position)
         {
-            transform.position = tileMap.WorldToCell(position);
+            transform.position = player.tileMap.WorldToCell(position);
 
         }
 
@@ -57,16 +50,16 @@ namespace Kristofer.exploration
         IEnumerator WaitToMove()
         {
             var worldpos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            targetCell = tileMap.WorldToCell(worldpos);
+            player.targetCell = player.tileMap.WorldToCell(worldpos);
 
-            isMoving = true;
+            isRefreshing = true;
 
-            while (tileMap.WorldToCell(transform.position) != targetCell)
+            while (player.tileMap.WorldToCell(transform.position) != player.targetCell)
             {
                 yield return new WaitForSeconds(1.0f);
 
-                var currentPosition = targetCell - tileMap.WorldToCell(transform.position);
-                
+                var currentPosition = player.targetCell - player.tileMap.WorldToCell(transform.position);
+
                 Vector3Int nextcell;
                 if (Mathf.Abs(currentPosition.x) > Mathf.Abs(currentPosition.y))
                 {
@@ -79,12 +72,12 @@ namespace Kristofer.exploration
 
                 //transform.position = tileMap.CellToWorld(nextcell);
                 Debug.Log(nextcell);
-                var json = JsonUtility.ToJson(new Vector3(nextcell.x,nextcell.y,nextcell.z));
-                
-                StartCoroutine(fetch.InnerPost("http://127.0.0.1:8125/set-position/" + fetch.id.name, json));
+                var json = JsonUtility.ToJson(new Vector3(nextcell.x, nextcell.y, nextcell.z));
+
+                StartCoroutine(KristoferFetch.instance.InnerPost("http://127.0.0.1:8125/set-position/" + KristoferFetch.instance.id.name, json));
             }
 
-            isMoving = false;
+            isRefreshing = false;
         }
 
 
@@ -93,7 +86,7 @@ namespace Kristofer.exploration
         {
             if (Input.GetMouseButtonDown(0))
             {
-                if (!isMoving)
+                if (!isRefreshing)
                 {
                     StartCoroutine(WaitToMove());
                 }
@@ -106,7 +99,5 @@ namespace Kristofer.exploration
     }
 
 
- }
 
-
-
+}
