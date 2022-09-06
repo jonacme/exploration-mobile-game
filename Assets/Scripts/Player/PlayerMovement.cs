@@ -15,9 +15,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Layer Settings")]
     public LayerMask ForeGround;        // layer Called ForeGround & MoutainsAndTree
     public LayerMask MoutainsAndSea;    
-    public LayerMask TreeAndBushes;  // random encounter layer in world map.
-
-    private Enemies enemy;
+    public LayerMask TreeAndBushes;  // random encounter layer in world map.    
 
     
 
@@ -34,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (input != Vector2.zero)
             {
+                
                 var targetPos = transform.position;
                 targetPos.x += input.x;
                 targetPos.y += input.y;
@@ -79,7 +78,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (Random.Range(1, 101) <= 10)    
             {
-                GameManager.Instance.battleScene(enemy);
+                GameManager.Instance.battleScene();
             }
         }
     }  

@@ -109,7 +109,7 @@ public class BattleTime : MonoBehaviour
         //progressBar.value = turnTime;
 
 
-        //if (turnTimer >= turnTime)
+        //if (progressTimer >= turnTime)
         //{
         //    progressBar.value = turnTime;
         //    instance.fightButton.enabled = true;

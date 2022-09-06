@@ -10,7 +10,8 @@ public struct Battle
 
 public class DataBase : MonoBehaviour
 {
-    public static DataBase _instance;
+    public static DataBase _instance;    
+
     public static DataBase instance
     {
         get
@@ -34,15 +35,18 @@ public class DataBase : MonoBehaviour
         else
         {
             DontDestroyOnLoad(gameObject);
-        }
+        }        
     }
 
     public Battle currentBattle;
+    
 
-    public static void InitFightScene(Enemies enemy)
-    {
-        instance.currentBattle = new Battle();
-        instance.currentBattle.nofEnemies = Random.Range(1, 3);
-        instance.currentBattle.type = enemy.type;              // enemy.type isnt working;
+    public void InitFightScene(Enemies enemy)
+    {        
+        currentBattle = new Battle();
+        Debug.Log(instance.currentBattle);  
+        
+        currentBattle.nofEnemies = Random.Range(1, 3);
+        currentBattle.type = enemy.type;              // enemy.type isnt working;
     }
 }

@@ -28,12 +28,12 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    public void battleScene(Enemies enemy)
+    public void battleScene()
     {
-        StartCoroutine(LoadBattleScene(enemy));
+        StartCoroutine(LoadBattleScene());
     }
 
-    IEnumerator LoadBattleScene(Enemies enemy)
+    IEnumerator LoadBattleScene()
     {
         sceneLoading = false;
         float loadingTime = 1.2f;
@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
 
             lastScene = SceneManager.GetActiveScene().name;
             // need to load the enemy type method too
-            DataBase.InitFightScene(enemy);
+            //DataBase.instance.InitFightScene(enemy);
             SceneManager.LoadScene("Juma-BattleScene");
             yield break;
         }   
