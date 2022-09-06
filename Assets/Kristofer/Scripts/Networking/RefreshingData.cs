@@ -6,8 +6,9 @@ namespace Kristofer.exploration
 {
     public class RefreshingData : MonoBehaviour
     {
-        [SerializeField] private bool isRefreshing = false;
+        [SerializeField] private bool isRefreshing;
         public PlayerController player;
+        public KristoferNetworkID id;
 
         void Start()
         {
@@ -18,14 +19,15 @@ namespace Kristofer.exploration
         public void Init()
         {
             isRefreshing = false;
-
+            id = GetComponent<KristoferNetworkID>();
+            player = GetComponent<PlayerController>();
         }
 
 
         [UnityEditor.Callbacks.DidReloadScripts]
         private static void OnScriptsReloaded()
         {
-            foreach (var o in FindObjectsOfType<PlayerController>())
+            foreach (var o in FindObjectsOfType<RefreshingData>())
             {
                 o.Init();
 
@@ -33,65 +35,36 @@ namespace Kristofer.exploration
 
         }
 
-
-
-        Vector3Int RelativeCell(Vector2 direction)
+        public void GotData(string jsonData)
         {
-            return player.tileMap.WorldToCell(transform.position + (Vector3)direction);
-        }
-
-        public void SetPos(Vector3 position)
-        {
-            transform.position = player.tileMap.WorldToCell(position);
+            var newPos = JsonUtility.FromJson<Vector3>(jsonData);
+            player.SetPos(newPos);
 
         }
 
-
-        IEnumerator WaitToMove()
+        IEnumerator Refreshing()
         {
-            var worldpos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            player.targetCell = player.tileMap.WorldToCell(worldpos);
-
             isRefreshing = true;
-
-            while (player.tileMap.WorldToCell(transform.position) != player.targetCell)
+            while (true)
             {
                 yield return new WaitForSeconds(1.0f);
 
-                var currentPosition = player.targetCell - player.tileMap.WorldToCell(transform.position);
-
-                Vector3Int nextcell;
-                if (Mathf.Abs(currentPosition.x) > Mathf.Abs(currentPosition.y))
-                {
-                    nextcell = RelativeCell((new Vector2(currentPosition.x, 0)).normalized);
-                }
-                else
-                {
-                    nextcell = RelativeCell((new Vector2(0, currentPosition.y)).normalized);
-                }
-
-                //transform.position = tileMap.CellToWorld(nextcell);
-                Debug.Log(nextcell);
-                var json = JsonUtility.ToJson(new Vector3(nextcell.x, nextcell.y, nextcell.z));
-
-                StartCoroutine(KristoferFetch.instance.InnerPost("http://127.0.0.1:8125/set-position/" + KristoferFetch.instance.id.name, json));
+                KristoferFetch.Get("http://127.0.0.1:8125/set-position/" + id.name, this);
             }
 
             isRefreshing = false;
+
+            yield break;
         }
 
 
 
         void Update()
         {
-            if (Input.GetMouseButtonDown(0))
-            {
                 if (!isRefreshing)
                 {
-                    StartCoroutine(WaitToMove());
+                    StartCoroutine(Refreshing());
                 }
-            }
-            transform.position = new Vector3(transform.position.x, transform.position.y, 0);
         }
 
 

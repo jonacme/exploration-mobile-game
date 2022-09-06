@@ -35,7 +35,7 @@ namespace Kristofer.exploration
 
 
         //Getting data
-        public IEnumerator Fetch(string uri)
+        public IEnumerator InnerGet(string uri, RefreshingData refreshData)
         {
 
 
@@ -48,9 +48,8 @@ namespace Kristofer.exploration
 
                     case UnityWebRequest.Result.Success:
                         //Getting the Vector3 position from the server
-                        var newPos = JsonUtility.FromJson<Vector3>(req.downloadHandler.text);
-                        Debug.Log("Parsing Vector3...Success! ");
-                        player.SetPos(newPos);
+                        refreshData.GotData(req.downloadHandler.text);
+                        Debug.Log("Parsing Vector3...Success! ");   
                         break;
                     case UnityWebRequest.Result.ProtocolError:
                         Debug.LogError("HTTP error" + req.error);
@@ -99,7 +98,16 @@ namespace Kristofer.exploration
 
 
         }
-    
+
+        public static void Get(string uri, RefreshingData refreshData)
+        {
+
+            instance.StartCoroutine(instance.InnerGet(uri, refreshData));
+
+
+        }
+
+
 
         private void Update()
         {
