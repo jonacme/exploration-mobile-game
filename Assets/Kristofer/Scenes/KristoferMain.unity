@@ -1495,6 +1495,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isRefreshing: 0
   player: {fileID: 1289928664}
+  id: {fileID: 1289928666}
 --- !u!114 &1634431235 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7443862115912753608, guid: bd05109083f33394c8ef7d6fa1e4443f, type: 3}

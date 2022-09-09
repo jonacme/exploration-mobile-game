@@ -56,9 +56,7 @@ namespace Kristofer.exploration
 
         IEnumerator WaitToMove()
         {
-            var worldpos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            targetCell = tileMap.WorldToCell(worldpos);
-
+            
             isMoving = true;
 
             while (tileMap.WorldToCell(transform.position) != targetCell)
@@ -67,21 +65,25 @@ namespace Kristofer.exploration
 
                 var currentPosition = targetCell - tileMap.WorldToCell(transform.position);
                 
-                Vector3Int nextcell;
+                Vector3 direction;
                 if (Mathf.Abs(currentPosition.x) > Mathf.Abs(currentPosition.y))
                 {
-                    nextcell = RelativeCell((new Vector2(currentPosition.x, 0)).normalized);
+                    //nextcell = RelativeCell((new Vector2(currentPosition.x, 0)).normalized);
+                    direction = new Vector3(currentPosition.x, 0, 0).normalized;
                 }
                 else
                 {
-                    nextcell = RelativeCell((new Vector2(0, currentPosition.y)).normalized);
+                    //nextcell = RelativeCell((new Vector2(0, currentPosition.y)).normalized);
+                    direction = new Vector3(0, currentPosition.y, 0).normalized;
+
+                    
                 }
 
-                //transform.position = tileMap.CellToWorld(nextcell);
-                Debug.Log(nextcell);
-                var json = JsonUtility.ToJson(new Vector3(nextcell.x,nextcell.y,nextcell.z));
-                
+                var json = JsonUtility.ToJson(direction);
+
                 StartCoroutine(fetch.InnerPost("http://127.0.0.1:8125/set-position/" + fetch.id.name, json));
+
+
             }
 
             isMoving = false;
@@ -93,6 +95,9 @@ namespace Kristofer.exploration
         {
             if (Input.GetMouseButtonDown(0))
             {
+                var worldpos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                targetCell = tileMap.WorldToCell(worldpos);
+
                 if (!isMoving)
                 {
                     StartCoroutine(WaitToMove());

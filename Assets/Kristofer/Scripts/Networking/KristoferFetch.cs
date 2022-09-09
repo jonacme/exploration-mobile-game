@@ -76,10 +76,8 @@ namespace Kristofer.exploration
                 {
 
                     case UnityWebRequest.Result.Success:
-                        Debug.Log("Success!");
                         break;
                     case UnityWebRequest.Result.ProtocolError:
-                        Debug.LogError("HTTP error" + req.error);
                         break;
 
 
