@@ -3,7 +3,8 @@ const fs = require('fs');
 const path = require('path');
 
 let positions = {saikyun: {x: 0, y: 0, z: 0},
-                 crab: {x: 4, y: 10, z: 0}};
+                 crab: {x: 4, y: 10, z: 0},
+                 robin: {x: -4, y: 0, z: 0}};
 
 function v3add(v1, v2) {
   return {x: v1.x + v2.x,
@@ -30,6 +31,84 @@ function v3_4way(v) {
 
 function v3eq(v1, v2) {
   return v1.x == v2.x && v1.y == v2.y && v1.z == v2.z;
+}
+
+
+
+
+
+
+
+
+
+
+function charactersToButtons() {
+  return "<select multiple onChange='selected_character = this.options[this.selectedIndex].value'>" +
+          Object.keys(positions).map(name => 
+    `<option>${name}</option>`
+).join("\n")
+         + "</select>";
+}
+
+function adminPage() {
+return (
+`
+<!-- <meta http-equiv="refresh" content="0.1"> -->
+
+<script>
+function get_pos(character) {
+  if (!character) {
+    console.error("no character selected");
+    return;
+  }
+  fetch("http://127.0.0.1:8125/position/" + character,
+        {method: 'GET'})
+  .then(res => res.json())
+  .then(res => { console.log(res);
+                 positions[character] = res; });
+}
+
+var selected_character = null;
+var positions = {};
+</script>
+
+<p>Characters</p>
+${charactersToButtons()}
+
+
+<button onClick="get_pos(selected_character)">Get Position</button>
+
+<table>
+  <tr>
+    <td>
+    &nbsp;
+    </td>
+    <td>
+    <button onClick="move(selected_character, {x: 0, y: -1})">Up</button>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <button onClick="move(selected_character, {x: -1, y: 0})">Left</button>
+    </td>
+    <td>
+    <button onClick="move(selected_character, {x: 0, y: 1})">Down</button>
+    </td>
+    <td>
+    <button onClick="move(selected_character, {x: 1, y: 0})">Right</button>
+    </td>
+  </tr>
+</table>
+
+
+
+
+
+
+
+
+
+`);
 }
 
 function responseFunc(request, response) {
@@ -76,6 +155,10 @@ function responseFunc(request, response) {
           response.end("nice");
         }, 300);
       });
+      break;
+    case 'admin':
+      response.writeHead(200, {'Content-Type': 'text/html' });
+      response.end(adminPage(), 'utf-8');
       break;
     default:
         response.writeHead(404);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class ControlCharacter : MonoBehaviour
+public class ControlCharacter : MonoBehaviour, HasPosition
 {
     public Tilemap map;
 
