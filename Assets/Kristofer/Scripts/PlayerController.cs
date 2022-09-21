@@ -64,7 +64,7 @@ namespace Kristofer.exploration
                 yield return new WaitForSeconds(1.0f);
 
                 var currentPosition = targetCell - tileMap.WorldToCell(transform.position);
-                
+                //Pushing
                 Vector3 direction;
                 if (Mathf.Abs(currentPosition.x) > Mathf.Abs(currentPosition.y))
                 {
