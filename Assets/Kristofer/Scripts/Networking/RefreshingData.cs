@@ -47,7 +47,7 @@ namespace Kristofer.exploration
             isRefreshing = true;
             while (true)
             {
-                yield return new WaitForSeconds(1.0f);
+                yield return new WaitForSeconds(0.1f);
 
                 KristoferFetch.Get("http://127.0.0.1:8125/set-position/" + id.name, this);
             }

@@ -89,7 +89,7 @@ namespace Kristofer.exploration
         }
 
 
-        public static void Post(string uri, string data)
+        public void Post(string uri, string data)
         {
 
             instance.StartCoroutine(instance.InnerPost(uri, data));
