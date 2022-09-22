@@ -71,7 +71,7 @@ namespace Kristofer.exploration
 
             while (tileMap.WorldToCell(transform.position) != targetCell)
             {
-                yield return new WaitForSeconds(0.3f);
+                yield return new WaitForSeconds(3f);
 
                 var curPos = tileMap.WorldToCell(transform.position);
                 
@@ -105,9 +105,9 @@ namespace Kristofer.exploration
               
                 
                 
-                var json = JsonUtility.ToJson(direction);
+                var json = JsonUtility.ToJson(movement);
 
-                fetch.Post("http://127.0.0.1:8125/set-position/" + fetch.id.name, json);
+                fetch.Post("http://127.0.0.1:8125/position/" + fetch.id.name, json);
 
                 lastPos = movement.currentPos;
 

@@ -8,7 +8,7 @@ namespace Kristofer.exploration
     public class KristoferFetch : MonoBehaviour
     {
         [SerializeField] private bool doFetch = false;
-        public PlayerController player;
+        
         public KristoferNetworkID id;
 
         private static KristoferFetch _instance;
