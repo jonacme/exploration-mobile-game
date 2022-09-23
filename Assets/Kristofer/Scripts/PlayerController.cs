@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,16 +20,17 @@ namespace Kristofer.exploration
         public Vector3 nextPos;
         public Vector3 lastPos;
         
-        void Start()
-        {
-           
-            Init();
-        }
-
+      
         public void Init()
         {
             isMoving = false;
 
+        }
+        
+        void Start()
+        {
+           
+            Init();
         }
 
 
@@ -56,7 +58,7 @@ namespace Kristofer.exploration
 
         }
 
-        struct MovementData
+        public struct MovementData
         {
             public Vector3 direction;
             public Vector3 currentPos;
@@ -71,29 +73,31 @@ namespace Kristofer.exploration
 
             while (tileMap.WorldToCell(transform.position) != targetCell)
             {
-                yield return new WaitForSeconds(3f);
+                yield return new WaitForSeconds(2f);
 
                 var curPos = tileMap.WorldToCell(transform.position);
                 
                 if (lastPos == curPos && nextPos != targetCell)
                 {
                     curPos = new Vector3Int(Mathf.FloorToInt(nextPos.x),Mathf.FloorToInt(nextPos.y),Mathf.FloorToInt(nextPos.z));
+                    //Debug.Log("Waiting to move:" + curPos);
                 }
-                
-                
-                var diff = targetCell - tileMap.WorldToCell(transform.position);
+
+
+                var diff = targetCell - curPos;
                 
                 Vector3 direction;
                 if (Mathf.Abs(diff.x) > Mathf.Abs(diff.y))
                 {
-                    //nextcell = RelativeCell((new Vector2(currentPosition.x, 0)).normalized);
+                    
                     direction = new Vector3(diff.x, 0, 0).normalized;
+                    Debug.Log("move in x direction: " + direction.x);
                 }
                 else
                 {
-                    //nextcell = RelativeCell((new Vector2(0, currentPosition.y)).normalized);
+                    
                     direction = new Vector3(0, diff.y, 0).normalized;
-
+                    Debug.Log("move in y direction:" + direction.y);
                     
                 }
 
@@ -102,18 +106,22 @@ namespace Kristofer.exploration
                 movement.direction = direction;
                 movement.currentPos = new Vector3(curPos.x,curPos.y,curPos.z);
                 nextPos = movement.currentPos + movement.direction;
-              
+                //Debug.Log("Movement: " + movement);
                 
                 
                 var json = JsonUtility.ToJson(movement);
-
-                fetch.Post("http://127.0.0.1:8125/position/" + fetch.id.name, json);
-
+                Debug.Log("JSON: " + json);
+                KristoferFetch.Post("http://127.0.0.1:8125/move/" + KristoferFetch.instance.id.name, json);
+                
                 lastPos = movement.currentPos;
+                Debug.Log("lastPos: " + lastPos);
 
             }
 
             isMoving = false;
+
+            yield break;
+
         }
 
 
@@ -122,16 +130,21 @@ namespace Kristofer.exploration
         {
             if (Input.GetMouseButtonDown(0))
             {
-                var worldpos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                targetCell = tileMap.WorldToCell(worldpos);
-                Debug.Log(worldpos);
+                if (Camera.main != null)
+                {
+                    var worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    targetCell = tileMap.WorldToCell(worldPos);
+                    Debug.Log("Move on click: " + worldPos);
+                }
 
                 if (!isMoving)
                 {
                     StartCoroutine(WaitToMove());
+                    Debug.Log("Waiting to move....");
                 }
             }
             transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+            
         }
 
 

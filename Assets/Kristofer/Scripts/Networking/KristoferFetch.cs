@@ -49,10 +49,10 @@ namespace Kristofer.exploration
                     case UnityWebRequest.Result.Success:
                         //Getting the Vector3 position from the server
                         refreshData.GotData(req.downloadHandler.text);
-                        Debug.Log("Parsing Vector3...Success! ");   
+                        //Debug.Log("Parsing Vector3...Success! ");   
                         break;
                     case UnityWebRequest.Result.ProtocolError:
-                        Debug.LogError("HTTP error" + req.error);
+                        Debug.LogError("HTTP error: " + req.error);
                         break;
 
 
@@ -64,9 +64,9 @@ namespace Kristofer.exploration
         }
 
         //Posting data
-        public IEnumerator InnerPost(string uri, string data)
+        IEnumerator InnerPost(string uri, string data)
         {
-
+            Debug.Log("Innerpost: " + uri + data);
 
             using (UnityWebRequest req = UnityWebRequest.Post(uri, data))
             {
@@ -76,8 +76,13 @@ namespace Kristofer.exploration
                 {
 
                     case UnityWebRequest.Result.Success:
+                        Debug.Log("Result success: " + req.result);
                         break;
                     case UnityWebRequest.Result.ProtocolError:
+                        Debug.Log("Protocol error: " + req.error);
+                        break;
+                    default:
+                        Debug.Log("Unhandled error");
                         break;
 
 
@@ -89,10 +94,11 @@ namespace Kristofer.exploration
         }
 
 
-        public void Post(string uri, string data)
+        public static void Post(string uri, string data)
         {
-
+            Debug.Log("Post" + data);
             instance.StartCoroutine(instance.InnerPost(uri, data));
+            Debug.Log("Starting Post");
 
 
         }

@@ -6,7 +6,7 @@ namespace Kristofer.exploration
 {
     public class RefreshingData : MonoBehaviour
     {
-        [SerializeField] private bool isRefreshing;
+        public bool isRefreshing;
         public PlayerController player;
         public KristoferNetworkID id;
 
@@ -16,8 +16,10 @@ namespace Kristofer.exploration
             Init();
         }
 
-        public void Init()
+        void Init()
         {
+            
+            
             isRefreshing = false;
             id = GetComponent<KristoferNetworkID>();
             player = GetComponent<PlayerController>();
@@ -47,9 +49,9 @@ namespace Kristofer.exploration
             isRefreshing = true;
             while (true)
             {
-                yield return new WaitForSeconds(0.3f);
+                yield return new WaitForSeconds(2f);
 
-                KristoferFetch.Get("http://127.0.0.1:8125/position/" + id.name, this);
+                KristoferFetch.Get("http://127.0.0.1:8125/set-position/" + id.name, this);
             }
 
             isRefreshing = false;
@@ -63,7 +65,7 @@ namespace Kristofer.exploration
         {
                 if (!isRefreshing)
                 {
-                    StartCoroutine(Refreshing());
+                    //StartCoroutine(Refreshing());
                 }
         }
 
