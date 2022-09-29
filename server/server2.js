@@ -61,11 +61,24 @@ function get_pos(character) {
     console.error("no character selected");
     return;
   }
+
   fetch("http://127.0.0.1:8125/position/" + character,
         {method: 'GET'})
   .then(res => res.json())
-  .then(res => { console.log(res);
+  .then(res => { console.log(character,"position:",res);
                  positions[character] = res; });
+}
+
+async function move(character, dir) {
+  if (!character) {
+    console.error("no character selected");
+    return;
+  }
+ 
+  fetch("http://127.0.0.1:8125/set-position/" + character, 
+        {method: 'POST', body: JSON.stringify({direction: dir,
+        current_pos: positions[character]})})
+        .then(() => get_pos(character));
 }
 
 var selected_character = null;
@@ -84,18 +97,18 @@ ${charactersToButtons()}
     &nbsp;
     </td>
     <td>
-    <button onClick="move(selected_character, {x: 0, y: -1})">Up</button>
+    <button onClick="move(selected_character, {x: 0, y: 1, z: 0})">/\\</button>
     </td>
   </tr>
   <tr>
     <td>
-    <button onClick="move(selected_character, {x: -1, y: 0})">Left</button>
+    <button onClick="move(selected_character, {x: -1, y: 0, z: 0})"><</button>
     </td>
     <td>
-    <button onClick="move(selected_character, {x: 0, y: 1})">Down</button>
+    <button onClick="move(selected_character, {x: 0, y: -1, z: 0})">\\/</button>
     </td>
     <td>
-    <button onClick="move(selected_character, {x: 1, y: 0})">Right</button>
+    <button onClick="move(selected_character, {x: 1, y: 0, z: 0})">></button>
     </td>
   </tr>
 </table>
@@ -139,8 +152,14 @@ function responseFunc(request, response) {
       });
 
       request.on('end', () => {
+        console.log("data", data);
+
         let username = parts[1];
-        let movement = JSON.parse(decodeURIComponent(data));
+
+        let movement;
+
+        movement = JSON.parse(decodeURIComponent(data));
+
         console.log(movement);
 
         movement.direction = v3_4way(movement.direction);
