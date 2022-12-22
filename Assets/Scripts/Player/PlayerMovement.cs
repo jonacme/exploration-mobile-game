@@ -31,8 +31,7 @@ public class PlayerMovement : MonoBehaviour
 
 
             if (input != Vector2.zero)
-            {
-                
+            {                
                 var targetPos = transform.position;
                 targetPos.x += input.x;
                 targetPos.y += input.y;
