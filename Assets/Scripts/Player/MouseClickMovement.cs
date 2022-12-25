@@ -55,7 +55,7 @@ public class MouseClickMovement : MonoBehaviour
 
             //transform.position = map.WorldToCell(nextCell);
             var json = JsonUtility.ToJson(new Vector3(nextCell.x, nextCell.y, nextCell.z));
-            StartCoroutine(Fetch.instance.Post("http://127.0.0.1:8125/set-positions/" + id._name, json));
+            Fetch.Post("http://127.0.0.1:8125/set-positions/" + id._name, json);
            
         }
 

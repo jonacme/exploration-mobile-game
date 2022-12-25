@@ -5,16 +5,14 @@ using UnityEngine.Tilemaps;
 
 public class RefreshData : MonoBehaviour
 {
-   
-
     public bool isRefreshing;
     public NetWorkId id;
-    public PlayerMovement player;
+    public MouseClickMovement player;
 
     private void Init()
     {
         id = GetComponent<NetWorkId>();
-        player = GetComponent<PlayerMovement>();
+        player = GetComponent<MouseClickMovement>();
     }
 
     // Start is called before the first frame update
@@ -47,7 +45,7 @@ public class RefreshData : MonoBehaviour
         {
             yield return new WaitForSeconds(0.3f);
 
-            StartCoroutine(Fetch.instance.Get("http://127.0.0.1:8125/set-positions/" + id._name, this));  
+            Fetch.Get("http://127.0.0.1:8125/set-positions/" + id._name, this);  
         }
 
         isRefreshing = false;
