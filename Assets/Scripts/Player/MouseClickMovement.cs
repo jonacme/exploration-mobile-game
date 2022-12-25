@@ -31,10 +31,7 @@ public class MouseClickMovement : MonoBehaviour
     }
 
     IEnumerator WaitToMove()
-    {
-        var worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        targetCell = map.WorldToCell(worldPos);
-
+    {  
         isMoving= true;
 
         while(map.WorldToCell(transform.position) != targetCell)
@@ -43,23 +40,26 @@ public class MouseClickMovement : MonoBehaviour
 
             var diff = targetCell - map.WorldToCell(transform.position);
 
-            Vector3Int nextCell;
+            Vector3 direction;
+            //Vector3Int nextCell;
             if(Mathf.Abs(diff.x) > Mathf.Abs(diff.y))
             {
-                nextCell = RelativeCell((new Vector2(diff.x, 0)).normalized);
+                //nextCell = RelativeCell((new Vector2(diff.x, 0)).normalized);
+                direction = new Vector3(diff.x, 0, 0).normalized;
             }
             else
             {
-                nextCell = RelativeCell((new Vector2(0, diff.y)).normalized);
+                //nextCell = RelativeCell((new Vector2(0, diff.y)).normalized);
+                direction = new Vector3(0, diff.y, 0).normalized;
             }
 
-            //transform.position = map.WorldToCell(nextCell);
-            var json = JsonUtility.ToJson(new Vector3(nextCell.x, nextCell.y, nextCell.z));
+            ////transform.position = map.WorldToCell(nextCell);
+            var json = JsonUtility.ToJson(direction);
             Fetch.Post("http://127.0.0.1:8125/set-positions/" + id._name, json);
-           
+
         }
 
-        isMoving= false;
+        isMoving = false;
         yield break;
     }
 
@@ -68,7 +68,10 @@ public class MouseClickMovement : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0))
         {
-            if(!isMoving)
+            var worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            targetCell = map.WorldToCell(worldPos);
+
+            if (!isMoving)
             {
                 StartCoroutine(WaitToMove());
                 Debug.Log("Move?");

@@ -5,6 +5,39 @@ const path = require('path');
 let position = {juma: {x:3, y:10, z: 0},                     // set position for the unity character movement.
                 monk: {x:4, y:9, z: 0}};  
 
+function v3add(v1, v2)
+{
+    return{x: v1.x + v2.x,
+           y: v1.y + v2.y, 
+           z: v1.z + v2.z};
+}   
+
+// turns a vector into something like {x:1, y:0, z:0}
+function v3_4way(v)
+{
+    if(v.x !== 0)
+    {
+        return{
+            x: v.x / Math.abs(v.x),
+            y:0,
+            z:0};
+    }
+    else if(v.y !== 0)
+    {
+        return{
+            x:0,
+            y: v.y / Math.abs(v.y),
+            z:0};
+    }
+    else if(v.z !== 0)
+    {
+        return{
+            x:0,
+            y:0,
+            z:0};
+    }
+}
+
 //console.log("position/juma");
 //console.log("/positions / juma".split("/").filter(x=> x !== ''));
 
@@ -37,10 +70,14 @@ function responsFunc(request, response)                                    // re
                 //console.log("oh i got all the data!", data);
 
                 let username = parts[1];
-                let newPos = JSON.parse(decodeURIComponent(data));
-                console.log('user', username, "Got new Pos", newPos);
-                position[username] = newPos;
-                
+                console.log("jason data:", "\ndecoded:", decodeURIComponent(data));
+                let direction = JSON.parse(decodeURIComponent(data));
+                direction = v3_4way(direction);
+
+                position[username] = v3add(position[username], direction);
+
+
+                console.log('user', username, "Got new Pos", position[username]);
                 response.writeHead(200);
                 response.end("nice");
             });

@@ -43,7 +43,7 @@ public class RefreshData : MonoBehaviour
         isRefreshing = true;
         while (true)
         {
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(1.0f);
 
             Fetch.Get("http://127.0.0.1:8125/set-positions/" + id._name, this);  
         }
