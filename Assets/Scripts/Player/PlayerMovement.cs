@@ -41,6 +41,20 @@ public class PlayerMovement : MonoBehaviour
             }            
         }
     }
+    public void SetPos(Vector3 pos)
+    {
+        isMoving = true;
+
+        while ((pos - transform.position).sqrMagnitude > Mathf.Epsilon)
+        {
+            // needs to change this to make character move
+            transform.position = Vector3.MoveTowards(transform.position, pos, moveSpeed * Time.deltaTime);            
+        }
+        transform.position = pos;
+
+        isMoving = false;
+    }
+
 
     IEnumerator Move(Vector3 targetPos)
     {
@@ -48,7 +62,8 @@ public class PlayerMovement : MonoBehaviour
 
         while((targetPos - transform.position).sqrMagnitude > Mathf.Epsilon)
         {
-            transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
+            // needs to change this to make character move
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);   
             yield return null;
         }
         transform.position = targetPos;
