@@ -45,11 +45,12 @@ public class RefreshData : MonoBehaviour
         {
             yield return new WaitForSeconds(1.0f);
 
-            Fetch.Get("http://127.0.0.1:8125/set-positions/" + id._name, this);  
+            Fetch.Get("http://127.0.0.1:8125/set-positions/" + id._name, this);            
+            
         }
 
-        isRefreshing = false;
-        yield break;
+        //isRefreshing = false;
+        //yield break;
     }
 
     // Update is called once per frame
